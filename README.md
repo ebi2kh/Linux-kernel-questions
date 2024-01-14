@@ -88,7 +88,7 @@ answer:
 - It likely involves an Intel wireless device using MSI-X interrupts.
 - The trace might be related to troubleshooting network performance or debugging driver issues.
 
-*2.2.what is mean first, second and last rows?
+*2.2.what is mean first, second and last rows?*
 
 ```console
 first:   irq/185-iwlwifi 674 [008] 697.294262: net:net_dev_queue: dev>
@@ -205,7 +205,14 @@ answer:
 - Specific tools available
 
 
-*more detail*
+*4.give one or multi use case for each of the tools below  that is the best tool for its use. Exemplary and detailed:
+BPF
+
+Ftrace
+
+Perf
+
+LTTng*
 
 
 **BPF (Berkeley Packet Filter):**
@@ -280,10 +287,7 @@ answer:
 - **Tracing a multi-threaded application** to analyze thread interactions and synchronization issues.
 - **Monitoring a production server** over a long period to identify performance trends and anomalies.
 
-*3.2.Give one exact use case that the tool is best for it?*
-
-answer:
-
+*more detail*
 
 **BPF:**
 
@@ -306,7 +310,7 @@ answer:
 - **Exact use case:** Troubleshooting intermittent performance issues in a multi-threaded application by recording long-term traces of thread interactions, scheduling, and resource contention using LTTng.
 
 
-*4.We want to know why a process is blocked and how to get out of the blocked state in Linux. Explain how you do this using tracing? Briefly state the necessary commands and necessary events and the method of analysis.*
+*5.We want to know why a process is blocked and how to get out of the blocked state in Linux. Explain how you do this using tracing? Briefly state the necessary commands and necessary events and the method of analysis.*
 
 answer:
 
