@@ -306,3 +306,72 @@ answer:
 - **Exact use case:** Troubleshooting intermittent performance issues in a multi-threaded application by recording long-term traces of thread interactions, scheduling, and resource contention using LTTng.
 
 
+*4.We want to know why a process is blocked and how to get out of the blocked state in Linux. Explain how you do this using tracing? Briefly state the necessary commands and necessary events and the method of analysis.*
+
+answer:
+
+ **Here's a guide on using tracing to investigate a blocked process in Linux:**
+
+**1. Identify the Blocked Process:**
+
+- Use `ps aux` to list processes and their states.
+- Look for processes with "D" (uninterruptible sleep) or "S" (interruptible sleep) states.
+- Note the PID of the blocked process.
+
+**2. Choose a Tracing Tool:**
+
+- **Ftrace:** Built-in, easy to use for basic tracing.
+- **Perf:** More comprehensive, supports various events and analysis tools.
+- **LTTng:** Advanced, long-duration tracing with low overhead.
+
+**3. Start Tracing:**
+
+- **Ftrace:**
+    - Enable specific events: `echo sched_switch > /sys/kernel/debug/tracing/set_event`
+    - Start tracing: `echo 1 > /sys/kernel/debug/tracing/tracing_on`
+- **Perf:**
+    - Trace the process: `perf record -p <PID>`
+- **LTTng:**
+    - Configure events and sessions, then start tracing.
+
+**4. Reproduce the Blocking Behavior:**
+
+- Trigger the actions that lead to the process being blocked.
+
+**5. Stop Tracing:**
+
+- **Ftrace:** `echo 0 > /sys/kernel/debug/tracing/tracing_on`
+- **Perf:** `Ctrl+C`
+- **LTTng:** Stop the tracing session.
+
+**6. Analyze the Trace:**
+
+- **Ftrace:** View trace in `/sys/kernel/debug/tracing/trace` or use `trace-cmd`.
+- **Perf:** Analyze with `perf report` or `perf script`.
+- **LTTng:** View with `lttng view`.
+
+**7. Look for Key Events:**
+
+- **sched_switch:** Context switches between processes.
+- **sched_blocked_reason:** Reason for blocking (e.g., waiting for I/O, mutex, lock).
+- **other events:** Related to I/O, networking, memory allocation, etc., depending on the suspected cause.
+
+**8. Identify the Blocking Reason:**
+
+- Analyze the trace to pinpoint the specific event(s) causing the process to block.
+- Determine the resource or condition it's waiting for.
+
+**9. Address the Issue:**
+
+- **I/O:** Improve I/O performance or handle errors.
+- **Locks:** Resolve deadlocks or optimize locking mechanisms.
+- **Resource contention:** Redesign resource usage or increase available resources.
+- **External dependencies:** Address issues with external services or resources.
+
+**Remember:**
+
+- Tracing overhead can impact system performance.
+- Analyze traces carefully to avoid false positives.
+- Consider additional tools like `strace` or debuggers for more detailed analysis.
+
+
